@@ -1,3 +1,17 @@
+
+
+
+##-------------------------------------
+## ignore the working dirs
+##-------------------------------------
+data/
+.ipynb_checkpoints/
+
+
+##-------------------------------------
+## ignore the tex files
+##-------------------------------------
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
