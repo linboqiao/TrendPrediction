@@ -14,6 +14,22 @@ import time,datetime
 
 
 
+###################
+## Help Funciton ##
+###################
+
+## Reset Index
+def resetindex(data):
+    data = data.reset_index()
+    data.drop(labels=['id'], axis=1, inplace=True)
+    return(data)
+
+
+
+################
+## Build Data ##
+################
+
 class builddata(object):
     train_data_path = ""
     test_data_path = ""
@@ -32,7 +48,9 @@ class builddata(object):
 
         # Split df_train to train_data and val_data
         train_data = df_train[~df_train.era.isin([19,20])]
+        train_data = resetindex(train_data)
         val_data = df_train[df_train.era.isin([19,20])]
+        val_data = resetindex(val_data)
         print ("Dimension of train_data is {}".format(train_data.shape))
         print ("Dimension of val_data is {}".format(val_data.shape))
 
@@ -60,6 +78,10 @@ class builddata(object):
         return(test_features)
 
 
+
+###################
+## Main Function ##
+###################
 
 if __name__ == "__main__":
     localtime = time.asctime(time.localtime())

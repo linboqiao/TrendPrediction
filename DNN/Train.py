@@ -23,7 +23,12 @@ from keras import backend as K
 
 
 
+#################
+## Train Model ##
+#################
+
 class trainmodel(object):
+
     def dnn_model(self):
         # define the model
         model = Sequential([
@@ -48,7 +53,18 @@ class trainmodel(object):
 
         return model
 
+    def model_fit(self, model, train_features, train_label, train_weight):
+        early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, verbose=1, patience=5)
+        model.fit(train_features.values, train_label, sample_weight = train_weight, callbacks = [early_stopping],
+                  epochs = 2, batch_size = 100)
 
+        return(model)
+
+
+
+###################
+## Main Function ##
+###################
 
 if __name__ == "__main__":
     localtime = time.asctime(time.localtime())
@@ -63,12 +79,13 @@ if __name__ == "__main__":
 
     trainDNN = trainmodel()
     model = trainDNN.dnn_model()
+    model = trainDNN.model_fit(model, train_features, train_label, train_weight)
 
-    early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, verbose=1, patience=5)
-    model.fit(train_features.values, train_label, sample_weight = train_weight, callbacks = [early_stopping], epochs = 5, batch_size = 100)
+    train_loss, train_accuracy = model.evaluate(train_features.values, train_label, verbose = 0)
+    print("Train Accuracy = {:.2f}".format(train_accuracy))
 
-    loss, accuracy = model.evaluate(val_features.values, val_label, verbose = 0)
-    print("Accuracy = {:.2f}".format(accuracy))
+    val_loss, val_accuracy = model.evaluate(val_features.values, val_label, verbose = 0)
+    print("Val Accuracy = {:.2f}".format(val_accuracy))
 
     localtime = time.asctime(time.localtime())
     print("程序结束运行时间：" + str(localtime))
