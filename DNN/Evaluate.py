@@ -21,6 +21,7 @@ from keras.layers import Dense, Activation,Dropout
 from keras.optimizers import RMSprop,Adam
 from keras.callbacks import EarlyStopping
 from keras import backend as K
+from keras import regularizers
 
 
 
@@ -61,12 +62,12 @@ if __name__ == "__main__":
     localtime = time.asctime(time.localtime())
     print("程序开始运行时间：" + str(localtime))
 
-    train_data_path = "./DATA/DATA_v2/stock_train_data_20170910.csv"
-    test_data_path = "./DATA/DATA_v2/stock_test_data_20170910.csv"
+    train_data_path = "./DATA/DATA_V3/stock_train_data_20170916.csv"
+    test_data_path = "./DATA/DATA_V3/stock_test_data_20170916.csv"
 
     builddata = builddata(train_data_path,test_data_path)
-    train_features, train_label, train_weight, val_features, val_label, val_weight = builddata.split_train_data()
-    test_features = builddata.process_test_data()
+    train_features, train_label, train_weight, val_features, val_label, val_weight = builddata.split_train_data_normalization()
+    test_features = builddata.process_test_data_normalization()
 
     trainDNN = trainmodel()
     model = trainDNN.dnn_model()
