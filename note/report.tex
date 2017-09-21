@@ -24,12 +24,16 @@
 
 \subsection{数据}
 数据集包括训练数据集和测试数据集两部分。
-
 训练数据集是一个以逗号分隔的文本文件(csv)，
 其中：id列为数据唯一标识编码，feature列为原始数据经过变换之后得到的特征，weight列为样本重要性，label列为待预测二分类标签，group列为样本所属分组编号，era列为时间区间编号(取值1-20为时间顺序)。
+测试数据集是一个以逗号分隔的文本文件(csv)。测试数据集不包括weight列、label列和era列。
 
-测试数据集是一个以逗号分隔的文本文件(csv)，
-其中：id列为数据唯一标识编码，feature列为原始数据经过变换之后得到的特征。测试数据集不包括weight列、label列和era列。
+\begin{itemize}
+\item weight取值最小为0，最大取到63。
+\item group取值共28组。
+\item era取值20组。
+\end{itemize}
+
 
 \subsection{评价标准}
 虚拟股票趋势预测比赛的评价指标类比一般二分类问题的评价方式，将最终的logloss值作为最终选手排名的依据，logloss的计算方法如下：
